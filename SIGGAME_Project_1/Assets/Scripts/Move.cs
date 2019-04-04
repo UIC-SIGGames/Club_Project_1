@@ -12,14 +12,15 @@ public class Move : MonoBehaviour
     public float speed = 6.0f;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
-
+    Transform t;
+     public float rotationSpeed = 40;
     private Vector3 moveDirection = Vector3.zero;
     private CharacterController controller;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
-
+        t = GetComponent<Transform>();
         // let the gameObject fall down
         gameObject.transform.position = new Vector3(0, 2, 0);
     }
@@ -40,6 +41,12 @@ public class Move : MonoBehaviour
                 moveDirection.y = jumpSpeed;
             }
         }
+
+
+        if (Input.GetKey(KeyCode.E))
+                t.rotation *= Quaternion.Euler(0, rotationSpeed * Time.deltaTime, 0);
+        else if (Input.GetKey(KeyCode.Q))
+                t.rotation *= Quaternion.Euler(0, -rotationSpeed * Time.deltaTime, 0);
 
         // Apply gravity
         moveDirection.y = moveDirection.y - (gravity * Time.deltaTime);
